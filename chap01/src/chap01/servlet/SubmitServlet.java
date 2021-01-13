@@ -33,7 +33,7 @@ public class SubmitServlet extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		
 		out.print("<html>");
-		out.print("<head><meta charset='utf-8'</head><body>");
+		out.print("<head><meta charset='utf-8'></head><body>");
 		while (names.hasMoreElements()) {
 			String name = names.nextElement();
 			String value = req.getParameter(name);
