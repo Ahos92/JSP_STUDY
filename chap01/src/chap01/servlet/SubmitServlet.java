@@ -17,6 +17,14 @@ public class SubmitServlet extends HttpServlet {
 	/*
 	 	Get방식의 요청은 서블릿의 doGet()
 	 	Post방식의 요청은 서블릿의 doPost()
+	 	
+	 	※ Get방식의 특징
+	 		- 길이에 제한이 있다 (URL 길이 제한)
+	 		- 즐겨찾기 저장시 데이터와 함께 저장된다.
+ 		
+ 		※ Post방식의 특징
+	 		- 길이에 제한이 없다
+	 		- 파일 전송, 긴 글 내용 전송등에 적합하다.
 	 */
 	
 	@Override
@@ -24,6 +32,9 @@ public class SubmitServlet extends HttpServlet {
 		//클라이언트에서 form을 통해 실려온 데이터는 req객체의 parameter라는 곳에 포함되어 있다.
 		
 		// (1) 파라미터를 Enumeration객체로 꺼내기
+		
+		// GET방식의 요청은 톰캣에 설정된 cahrset을 이용
+		//	(URL을 청므 해석하는 것은 톰캣이기 때문)
 		
 		// 모든 이름을 반복 돌리기 편한 형태로 담아놓은 객체를 꺼낸다
 		Enumeration<String> names = req.getParameterNames();
