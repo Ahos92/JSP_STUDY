@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  
+  <!-- web.xml은 TomCat프로그램 내에서 처리해주는 파일 -->
+  
+  <!-- ContextRoot로 접속한 사용자에게 보여줄 메인 페이지 설정 -->
   <display-name>chap01</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -9,4 +13,90 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- spring의 DispatcherServlet 공부 -->
+  <servlet>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<servlet-class>chap01.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  
+  
+  <servlet>
+  	<servlet-name>init_param_servlet</servlet-name>
+  	<servlet-class>chap01.servlet.InitParamServlet</servlet-class>
+  	<!-- web.xml에서 선언 할 수 있는 변수 -->
+  	<init-param>
+  		<param-name>myName</param-name>
+  		<param-value>김영호</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>myTel</param-name>
+  		<param-value>010-1234-1234</param-value>
+  	</init-param>
+  	
+  	<init-param>
+  		<param-name>username</param-name>
+  		<param-value>hr</param-value>
+  	</init-param>  	
+  	
+  	<init-param>
+  		<param-name>password</param-name>
+  		<param-value>hr</param-value>
+  	</init-param> 
+  	
+  	<init-param>
+  		<param-name>jdbcurl</param-name>
+  		<param-value>jdbc:oracle:thin:@localhost:1521/xepdb1</param-value>
+  	</init-param> 
+  </servlet>
+  
+  <!-- @@사용자가 요청한 URL을 원하는 서블릿 또는 JSP로 연결 시키기 (매핑)@@-->
+  <!-- 1. 톰캣에 사용할 서블릿 또는 JSP를 등록한다. -->
+  <servlet>
+  	<!-- servlet-name : 서블릿 이름 설정 (변수) -->
+  	<!-- servlet-class : 실제 서블릿 위치-->
+  	<servlet-name>mapping_test_servlet</servlet-name>
+  	<servlet-class>chap01.servlet.MappingTestServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>select_page</servlet-name>
+  	<jsp-file>/WEB-INF/jsp/2_dispatch/select_page.jsp</jsp-file>
+  </servlet>
+  
+  <!-- 2. 어떤 URL로 들어왔을 때 어떤 서블릿을 사용할지 설정한다. -->
+  <servlet-mapping>
+	<servlet-name>mapping_test_servlet</servlet-name>
+	<url-pattern>/mapping</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>select_page</servlet-name>
+  	<url-pattern>/page</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>init_param_servlet</servlet-name>
+  	<url-pattern>/init</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+
+  <!-- 
+  	'/' 만 적는 url-pattern은 web.xml에 설정되지 않은 모든 요청을 처리해준다.
+  		(else 같은 역할을 한다.)
+   -->
+  <servlet-mapping>
+  	<servlet-name>DispatcherServlet</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+    <!-- resource mapping -->
+  <!-- servlet-name default는 WebContent의 경로로 접속하도록 설정한다 -->
+  <servlet-mapping>
+  	<servlet-name>default</servlet-name>
+  	<url-pattern>/assets/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
