@@ -20,4 +20,9 @@ public class Student {
 		return this.kor;
 	}
 	
+	@Override
+	public String toString() {
+		return "[ " + name + " / " + kor + " ]";
+	}
+	
 }
