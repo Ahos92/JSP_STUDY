@@ -17,9 +17,17 @@
 			 alert("아이디나 비밀번호가 맞지않습니다.");
 		</script>
 	</c:when>
+	
+	<c:when test="${signCheck eq true }">
+		<c:remove var="signCheck" scope="session"/>
+		<script>
+			 alert("회원가입이 성공적으로 완료되었습니다.");
+		</script>
+	</c:when>
+	
 </c:choose>
 
-<form action="./logincheck" method="GET">
+<form action="<c:url value='/loginpage'/>" method="POST">
 	<h2 style="text-align: center">
 		아이디 : <input type="text" name="user_id"/><br />
 		<br />
@@ -29,6 +37,7 @@
 	</h2>
 </form>
 
+<a href="<c:url value='/home'/>">메인으로 돌아가기</a>
 
 </body>
 </html>

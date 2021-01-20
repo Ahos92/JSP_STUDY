@@ -5,14 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class HomeContentCotroller implements Controller {
 
-	int num;
-	
-	public HomeContentCotroller(int num) {
-		this.num = num;
-	}
-	
 	@Override
 	public String control(HttpServletRequest req, HttpServletResponse resp) {
-		return "/WEB-INF/jsp/7_jdbc/homeContent" + num + ".jsp";
+		String path = req.getRequestURI().substring(req.getContextPath().length());	
+		return "/WEB-INF/jsp/7_jdbc" + path + ".jsp";
 	}
 }

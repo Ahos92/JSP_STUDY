@@ -10,13 +10,13 @@ public class ControllerFactory {
 	static {
 		controllerMap = new HashMap<>();
 		controllerMap.put("/home", new HomeCotroller());
+		controllerMap.put("/signup_check", new SignupController());
 		controllerMap.put("/loginpage", new LoginController());
-		controllerMap.put("/logincheck", new LoginCheckController());
 		controllerMap.put("/logout", new LogoutCotroller());
-		controllerMap.put("/homeContent1", new HomeContentCotroller(1));
-		controllerMap.put("/homeContent2", new HomeContentCotroller(2));
-		controllerMap.put("/homeContent3", new HomeContentCotroller(3));
-		controllerMap.put("/homeContent4", new HomeContentCotroller(4));
+		controllerMap.put("/homeContent1", new HomeContentCotroller());
+		controllerMap.put("/homeContent2", new HomeContentCotroller());
+		controllerMap.put("/homeContent3", new HomeContentCotroller());
+		controllerMap.put("/homeContent4", new HomeContentCotroller());
 	}
 	
 	public static Controller getController(String uri) {

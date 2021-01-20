@@ -13,22 +13,25 @@
 
 <c:choose>
 	<c:when test="${login eq false || empty login}" >
-		<form action="./loginpage">
-			<input type="submit" value="로그인 하세요~!"/>
+		<form action="<c:url value='/loginpage'/>">
+			<input type="submit" value="로그인"/>
+		</form>
+		<form action="<c:url value='/signup_check'/>">
+			<input type="submit" value="회원가입"/>
 		</form>
 	</c:when>
 	
 	<c:otherwise>
 		<h3>환영 합니다! '${user_name}'님</h3>
-		<a href="./logout">로그 아웃</a>
+		<a href="<c:url value='/logout'/>">로그 아웃</a>
 	</c:otherwise>
 </c:choose>
 
 <ul>
-	<li><a href="./homeContent1"> 홈페이지 내용 1</a></li>
-	<li><a href="./homeContent2"> 홈페이지 내용 2</a></li>
-	<li><a href="./homeContent3"> 홈페이지 내용 3(로그인 필요)</a></li>
-	<li><a href="./homeContent4"> 홈페이지 내용 4(로그인 필요)</a></li>
+	<li><a href="<c:url value='/homeContent1'/>"> 홈페이지 내용 1</a></li>
+	<li><a href="<c:url value='/homeContent2'/>"> 홈페이지 내용 2</a></li>
+	<li><a href="<c:url value='/homeContent3'/>"> 홈페이지 내용 3(로그인 필요)</a></li>
+	<li><a href="<c:url value='/homeContent4'/>"> 홈페이지 내용 4(로그인 필요)</a></li>
 	<li>...</li>
 </ul>
 

@@ -12,12 +12,8 @@ import controller.ControllerFactory;
 
 public class DispatcherServlet extends HttpServlet{
 
-	/* 
-	 	* dispatcherServlet의 개념
-	 		- 개념정리만 한것 이 프로젝트에서는 설정을 안해놓음!
-	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			/*
 			 	# web.xml
 			 
@@ -34,21 +30,24 @@ public class DispatcherServlet extends HttpServlet{
 				  </servlet-mapping>
 		 */
 		
-		// 1. 요청 주소를 DispatcherServlet으로 받아옴
+		// 1. 요청 주소를 web.xml으로부터 받아옴
 		String path = req.getRequestURI().substring(req.getContextPath().length());
-		System.out.println("사용자 요청 주소 : " + path);		
-		
+		System.out.println("사용자의 요청 주소 - " + path);
+
 		// 2. ControllerFactory에 들어가 요청 주소에 맞는 Controller 객체를 반환 ( 팩토리 디자인 패턴 )
 		// 3. Controller객체 안에서 파라미터 꺼내고 할거 함 ( 비즈니스 로직 구현 )	
 		Controller controller = ControllerFactory.getController(path);
 		
-		// 4. 어느 페이지를 응답할지 결정 ( Controller객체의 리턴 값(view의 경로))
-		String nextPage = controller.control(req, resp);
+		// 4. 어느 페이지를 응답할지 결정 ( Controller객체의 리턴 값(jsp의 경로))
+		String viewPath = controller.control(req, resp);
 		
-		if (nextPage != null) {
-			req.getRequestDispatcher(nextPage).forward(req, resp);			
+		// 5. 경로를 따라 페이지 이동
+		if (viewPath.startsWith("redirect:")) {
+			// 서블릿으로 다시 보내는 요청을 사용 할수도 있음
+			resp.sendRedirect(viewPath.substring("redirect:".length()));
+			
 		} else {		
-			resp.sendRedirect(req.getContextPath());
+			req.getRequestDispatcher(viewPath).forward(req, resp);			
 		}
 		
 	}
