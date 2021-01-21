@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<%@ include file="/WEB-INF/jsp/7_jdbc/jspfrag/logininfo.jspf" %>
+
 <c:choose>
 	<c:when test="${login eq false || empty login}" >
 		<form action="./loginpage">

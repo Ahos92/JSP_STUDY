@@ -11,7 +11,7 @@ public class ControllerFactory {
 		controllerMap = new HashMap<>();
 		controllerMap.put("/home", new HomeCotroller());
 		controllerMap.put("/signup_check", new SignupController());
-		controllerMap.put("/loginpage", new LoginController());
+		controllerMap.put("/login", new LoginController());
 		controllerMap.put("/logout", new LogoutCotroller());
 		controllerMap.put("/homeContent1", new HomeContentCotroller());
 		controllerMap.put("/homeContent2", new HomeContentCotroller());

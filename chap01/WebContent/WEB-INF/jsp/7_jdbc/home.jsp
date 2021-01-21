@@ -13,7 +13,7 @@
 
 <c:choose>
 	<c:when test="${login eq false || empty login}" >
-		<form action="<c:url value='/loginpage'/>">
+		<form action="<c:url value='/login'/>">
 			<input type="submit" value="로그인"/>
 		</form>
 		<form action="<c:url value='/signup_check'/>">
@@ -35,7 +35,7 @@
 	<li>...</li>
 </ul>
 
-
+<%@ include file="/WEB-INF/jsp/7_jdbc/jspfrag/logininfo.jspf" %>
 
 </body>
 </html>

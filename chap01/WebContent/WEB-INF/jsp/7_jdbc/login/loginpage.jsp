@@ -27,7 +27,7 @@
 	
 </c:choose>
 
-<form action="<c:url value='/loginpage'/>" method="POST">
+<form action="<c:url value='/login'/>" method="POST">
 	<h2 style="text-align: center">
 		아이디 : <input type="text" name="user_id"/><br />
 		<br />

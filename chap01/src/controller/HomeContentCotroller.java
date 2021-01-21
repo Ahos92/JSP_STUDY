@@ -8,6 +8,6 @@ public class HomeContentCotroller implements Controller {
 	@Override
 	public String control(HttpServletRequest req, HttpServletResponse resp) {
 		String path = req.getRequestURI().substring(req.getContextPath().length());	
-		return "/WEB-INF/jsp/7_jdbc" + path + ".jsp";
+		return "/WEB-INF/jsp/7_jdbc/content" + path + ".jsp";
 	}
 }

@@ -1,0 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/7_jdbc/jspfrag/header.jspf" %>
+<div id="loginInfo">
+	<c:if test="${login eq true }">
+		<h3>환영 합니다! '${user_name}'님 (logininfo.jspf)</h3>
+	</c:if>
+</div>

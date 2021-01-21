@@ -7,6 +7,6 @@ public class LogoutCotroller implements Controller{
 
 	@Override
 	public String control(HttpServletRequest req, HttpServletResponse resp) {
-		return "/WEB-INF/jsp/7_jdbc/logout.jsp";
+		return "/WEB-INF/jsp/7_jdbc/login/logout.jsp";
 	}
 }

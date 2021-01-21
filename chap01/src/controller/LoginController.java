@@ -10,46 +10,54 @@ import javax.servlet.http.HttpSession;
 import dao.HikariMemberDAO;
 import dao.MemberDAO;
 import domain.MemberVO;
-import myutil.Hash;
+import util.hash.MemberPassword;
+import util.hash.MemberPasswordImpl;
 
 public class LoginController implements Controller {
 
+	private MemberVO member = new MemberVO();
+	private MemberDAO dao = new HikariMemberDAO();
+	private MemberPassword hash = MemberPasswordImpl.getInstance();
+	
+	//로그인 Form
 	private String doGet(HttpServletRequest req, HttpServletResponse resp) {
-		// 로그인 Form
-		return "/WEB-INF/jsp/7_jdbc/loginpage.jsp";
+		return "/WEB-INF/jsp/7_jdbc/login/loginpage.jsp";
 	}
 	
+	// 로그인 체크
 	private String doPost(HttpServletRequest req, HttpServletResponse resp) {
-		// 로그인 체크
-		MemberVO member = new MemberVO();
-		MemberDAO dao = new HikariMemberDAO();
 		HttpSession session = req.getSession();
-		Hash hash = new Hash();
-		
 		String id = req.getParameter("user_id");
 		String pwd = req.getParameter("user_password");
 
-		member = dao.searchMember(id);
-		
-		String confirm_pwd;
-		try {
-			// 문제
-			confirm_pwd = hash.setSHA256(pwd, member.getUser_salt().getBytes());
-
-//			System.out.println("user pwd -> hash : " + confirm_pwd);
-//			System.out.println("DB saved pwd : " + member.getUser_password());
-			
-			if (member.getUser_password().equals(confirm_pwd)) {
-				session.setAttribute("user_name", member.getUser_name());
-				return "/WEB-INF/jsp/7_jdbc/loginsuccess.jsp";
-				
-			} else {
-				return "/WEB-INF/jsp/7_jdbc/loginfail.jsp";
-			}
-			
-		} catch(NullPointerException npe) {
-			return "/WEB-INF/jsp/7_jdbc/loginfail.jsp";
+		if(id == null || id == "" || pwd == null || pwd =="") {
+			return "/WEB-INF/jsp/7_jdbc/login/loginfail.jsp";
 		}
+		
+		// 로그인 체크 searchMember
+		member = dao.get(id);
+		
+		// salt 값 바이트 배열로 바꾸기 (HexString -> Byte[]) 수동
+		String salt = member.getUser_salt();
+		byte[] salt_arr = new byte[salt.length() / 2];
+		
+		for (int i = 0; i < salt_arr.length; i++) {
+			   int index = i * 2;
+			   int j = Integer.parseInt(salt.substring(index, index + 2), 16);
+			   salt_arr[i] = (byte) j;
+		}
+		
+		String user_hash = member.getUser_password();
+		String confirm_hash = hash.digestPassword(pwd, salt_arr);
+	
+		if (user_hash.equals(confirm_hash)) {
+			session.setAttribute("user_name", member.getUser_name());
+			return "/WEB-INF/jsp/7_jdbc/login/loginsuccess.jsp";
+			
+		} else {
+			return "/WEB-INF/jsp/7_jdbc/login/loginfail.jsp";
+		}
+
 	}
 
 	

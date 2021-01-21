@@ -8,8 +8,10 @@ public class MemberVO {
 	private int user_age;
 	private String user_salt;
 	
-	public MemberVO() {
-		
+	@Override
+	public String toString() {
+		return String.format("[id = \"%s\", pw = \"%s\", name = \"%s\", age = \"%d\", salt = \"%s\"]"
+				, user_id, user_password, user_name, user_age, user_salt);
 	}
 	
 	public String getUser_salt() {

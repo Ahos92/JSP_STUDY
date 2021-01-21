@@ -29,7 +29,7 @@ public class DispatcherServlet extends HttpServlet{
 					<url-pattern>/</url-pattern>
 				  </servlet-mapping>
 		 */
-		
+		req.setCharacterEncoding("UTF-8");
 		// 1. 요청 주소를 web.xml으로부터 받아옴
 		String path = req.getRequestURI().substring(req.getContextPath().length());
 		System.out.println("사용자의 요청 주소 - " + path);

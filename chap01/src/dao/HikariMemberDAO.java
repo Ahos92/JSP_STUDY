@@ -18,42 +18,35 @@ public class HikariMemberDAO implements MemberDAO {
 	static PreparedStatement ps, ps2, ps3;
 	static ResultSet rs;
 
-	MemberVO member;
-	
 	public HikariMemberDAO() {}
 	
-	public MemberVO searchMember(String user_id) {
-
-		member = new MemberVO();
-
+	@Override
+	public MemberVO get(String user_id) {
+		MemberVO member = new MemberVO();
+		
 		conn = DBManager.getConnection();
 		try {
-			ps = conn.prepareStatement("select * from logintest where user_id = \'" + user_id + "\'");
+			ps = conn.prepareStatement("select * from logintest where user_id=?");
+			ps.setString(1, user_id);
+			
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
-				member = new MemberVO();
-
+			if (rs.next()) {
 				member.setUser_id(rs.getString("user_id"));
 				member.setUser_password(rs.getString("user_password"));
 				member.setUser_name(rs.getString("user_name"));
 				member.setUser_age(rs.getInt("user_age"));
 				member.setUser_salt(rs.getString("user_salt"));
 			}
-
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				DBManager.r_p_c_Close(rs, ps, conn);
-			} catch (SQLException e) {}
-
 		}
-
+		
 		return member;
 	}
 
+	@Override
 	public boolean saveMember(MemberVO member2) {
 		conn = DBManager.getConnection();
 		
@@ -89,6 +82,48 @@ public class HikariMemberDAO implements MemberDAO {
 		}		
 		return false;
 	}
+	
+	
+
+	
+//	@Override
+//	public boolean searchMember(String user_id, String user_password) {
+//		MemberVO member = get(user_id);
+//		
+//		if (member.getUser_id() == null) {
+//			return false;
+//		}
+//
+//		member = new MemberVO();
+//
+//		conn = DBManager.getConnection();
+//		try {
+//			ps = conn.prepareStatement("select * from logintest where user_id = \'" + user_id + "\'");
+//			rs = ps.executeQuery();
+//
+//			while (rs.next()) {
+//				member = new MemberVO();
+//
+//				member.setUser_id(rs.getString("user_id"));
+//				member.setUser_password(rs.getString("user_password"));
+//				member.setUser_name(rs.getString("user_name"));
+//				member.setUser_age(rs.getInt("user_age"));
+//				member.setUser_salt(rs.getString("user_salt"));
+//			}
+//
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				DBManager.r_p_c_Close(rs, ps, conn);
+//			} catch (SQLException e) {}
+//
+//		}
+//
+//		return member;
+//		return false;
+//	}
 		
 }
 	

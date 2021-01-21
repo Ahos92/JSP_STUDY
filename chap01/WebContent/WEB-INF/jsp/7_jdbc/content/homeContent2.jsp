@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<%@ include file="/WEB-INF/jsp/7_jdbc/jspfrag/logininfo.jspf" %>
+
 <h3>홈페이지 내용 2의 내용들</h3>
 	<ul>
 		<li>홈페이지 내용 2의 내용들 1</li>
