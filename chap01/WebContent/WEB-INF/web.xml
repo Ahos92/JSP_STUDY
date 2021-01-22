@@ -82,9 +82,32 @@
   
   
   
-
+	<!-- 필터 등록  -->
+	<filter>
+		<filter-name>Logger</filter-name>
+		<filter-class>filter.LoggerFilter</filter-class>
+		<init-param>
+			<description>이것은 무슨일을 하는 값입니다.</description>
+			<param-name>something</param-name>
+			<param-value>unknown value</param-value>
+		</init-param>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- 필터 매핑-->
+	<filter-mapping>
+		<filter-name>Logger</filter-name>
+		<url-pattern>/mapping</url-pattern>
+		<url-pattern>/page</url-pattern>
+		<url-pattern>/init</url-pattern>
+		<servlet-name>DispatcherServlet</servlet-name>
+	</filter-mapping>
+	
   <!-- 
-  	'/' 만 적는 url-pattern은 web.xml에 설정되지 않은 모든 요청을 처리해준다.
+  	'/' 만 적는 url-pattern은 web.xml에 설정되지 않은 '모든 요청'을 처리해준다.
   		(else 같은 역할을 한다.)
    -->
   <servlet-mapping>
